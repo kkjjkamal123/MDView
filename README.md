@@ -29,7 +29,8 @@ first**, and everything else is expected to keep up with it.
 - Every LaTeX delimiter style, including bare AMS environments
 - KaTeX for speed, with a full MathJax fallback so nothing is ever lost
 - A 1000-equation document opens in **114 ms** and scrolls at **144 fps**
-- Works completely offline — no network access at any point
+- Works completely offline — the only network request it will ever make is an
+  update check, and that can be turned off
 
 ---
 
@@ -40,11 +41,11 @@ Grab the installer for your platform from the
 
 | Platform | File | Notes |
 |---|---|---|
-| Windows 10/11 (64-bit) | `MDView-Setup-1.0.0-x64.exe` | Recommended for most PCs |
-| Windows on ARM | `MDView-Setup-1.0.0-arm64.exe` | Surface Pro X, Snapdragon laptops |
-| Windows (either) | `MDView-Setup-1.0.0.exe` | Universal installer, both architectures |
-| Windows, no install | `MDView-Portable-1.0.0.exe` | Runs from a USB stick, writes no registry keys |
-| Linux (64-bit) | `mdview-1.0.0.tar.gz` | Extract and run `./mdview` |
+| Windows 10/11 (64-bit) | `MDView-Setup-1.1.0-x64.exe` | Recommended for most PCs |
+| Windows on ARM | `MDView-Setup-1.1.0-arm64.exe` | Surface Pro X, Snapdragon laptops |
+| Windows (either) | `MDView-Setup-1.1.0.exe` | Universal installer, both architectures |
+| Windows, no install | `MDView-Portable-1.1.0.exe` | Runs from a USB stick, writes no registry keys |
+| Linux (64-bit) | `mdview-1.1.0.tar.gz` | Extract and run `./mdview` |
 
 > **Windows SmartScreen** may warn on first run because the installer is not
 > code-signed with a paid certificate. Choose *More info → Run anyway*.
@@ -106,7 +107,7 @@ fence are never mistaken for equations.
 - Admonitions in both `> [!NOTE]` and `:::note` styles
 - Copy button and soft-wrap on every code block
 - Relative images, video and audio
-- Export to PDF, HTML, PNG and plain text
+- Export to PDF, Word, HTML, PNG and plain text
 
 </td></tr>
 </table>
@@ -130,9 +131,51 @@ fence are never mistaken for equations.
 - **Optional editor pane** with synchronised scrolling, when you do want to edit
 - Light, dark and system themes; four reading widths; three type families
 - Focus mode, full screen, zoom — all remembered between sessions
+- Open tabs are restored the next time you launch
 
 <div align="center">
 <img src="screenshots/editor.png" width="900" alt="Split editor and live preview">
+</div>
+
+---
+
+## Search a whole folder
+
+Point MDView at a folder and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd>
+searches every Markdown file in it — with case, whole-word and regular
+expression options. Results group by file with line numbers; click one and the
+document opens with the matching block highlighted.
+
+Fast enough to be interactive: a nine-file folder with a hundred matches
+resolves in under 20 ms.
+
+<div align="center">
+<img src="screenshots/search.png" width="900" alt="Folder-wide search with grouped, highlighted results">
+</div>
+
+---
+
+## Make it look how you want
+
+Drop a `.css` file into the themes folder and it becomes a theme, selectable
+from *View → Theme*. Edit the file in any editor and the window restyles as
+you save — no restart, no reload.
+
+MDView ships with **Sepia**, **Nord**, **High Contrast** and **Wide Serif**,
+plus a README in the folder explaining the design tokens. Overriding a handful
+of variables is usually all it takes:
+
+```css
+:root {
+  --bg: #f6efe3;        /* page background   */
+  --fg: #453b2d;        /* body text         */
+  --accent: #9a6428;    /* links, highlights */
+}
+```
+
+<div align="center">
+<img src="screenshots/theme-sepia.png" width="450" alt="Sepia theme">
+<img src="screenshots/theme-nord.png" width="450" alt="Nord theme">
 </div>
 
 ---
@@ -146,13 +189,15 @@ fence are never mistaken for equations.
 | New / close tab | <kbd>Ctrl</kbd>+<kbd>T</kbd> / <kbd>Ctrl</kbd>+<kbd>W</kbd> |
 | Next tab | <kbd>Ctrl</kbd>+<kbd>Tab</kbd> |
 | Find in document | <kbd>Ctrl</kbd>+<kbd>F</kbd> |
+| Search in folder | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd> |
+| Back / forward | <kbd>Alt</kbd>+<kbd>←</kbd> / <kbd>Alt</kbd>+<kbd>→</kbd> |
 | Command palette | <kbd>Ctrl</kbd>+<kbd>K</kbd> |
 | Go to heading | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> |
 | Previous / next heading | <kbd>Ctrl</kbd>+<kbd>↑</kbd> / <kbd>Ctrl</kbd>+<kbd>↓</kbd> |
 | Toggle outline | <kbd>Ctrl</kbd>+<kbd>\\</kbd> |
 | Toggle editor | <kbd>Ctrl</kbd>+<kbd>E</kbd> |
 | Toggle theme | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd> |
-| Focus mode | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd> |
+| Focus mode | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd> |
 | Text size | <kbd>Ctrl</kbd>+<kbd>+</kbd> / <kbd>Ctrl</kbd>+<kbd>−</kbd> / <kbd>Ctrl</kbd>+<kbd>0</kbd> |
 | Print / export PDF | <kbd>Ctrl</kbd>+<kbd>P</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd> |
 | Full screen | <kbd>F11</kbd> |
@@ -167,6 +212,7 @@ Measured on a 144 Hz display, where a frame has to be finished in 6.94 ms.
 | | Result |
 |---|---|
 | Launch to visible window | ~310 ms |
+| Search a folder of nine documents | 12–20 ms |
 | Open a typical document | 60–170 ms |
 | Open a 1116-equation, 61 000 px document | 114 ms, maths fills in behind you |
 | Scrolling, normal maths density | 6.9 ms/frame — a solid **144 fps** |
@@ -180,9 +226,11 @@ and nothing measures the document during a scroll.
 
 ## Privacy
 
-MDView never opens a network connection. It has no analytics, no update
-checks, no crash reporting and no account system. Files you open stay on your
-machine, and every document is rendered inside a sandboxed, script-free page.
+MDView has no analytics, no crash reporting, no accounts and no cloud. The
+only network request it ever makes is an update check against this
+repository's releases page, which you can switch off in Preferences. Nothing
+about the files you open is ever transmitted — they are read from disk and
+rendered inside a sandboxed, script-free page.
 
 ---
 
