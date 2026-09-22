@@ -11,7 +11,7 @@ No account, no cloud, no telemetry, no editor you didn't ask for.
 
 [![Download](https://img.shields.io/badge/Download-Latest%20Release-2f6feb?style=for-the-badge)](../../releases/latest)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=for-the-badge)](LICENSE)
-[![Platform](https://img.shields.io/badge/Windows%20%7C%20Linux-lightgrey?style=for-the-badge)](../../releases/latest)
+[![Platform](https://img.shields.io/badge/Windows%20%7C%20Linux%20%7C%20MacOS-lightgrey?style=for-the-badge)](../../releases/latest)
 
 <img src="screenshots/hero.png" width="900" alt="MDView showing a rendered Markdown document">
 
