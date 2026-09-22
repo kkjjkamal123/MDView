@@ -1,0 +1,10 @@
+.DS_Store
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+.gemini/
+.agents/
+*.xcbkptlist
+MDView/
+MDView.xcodeproj/
