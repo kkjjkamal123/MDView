@@ -8,3 +8,5 @@ xcuserdata/
 *.xcbkptlist
 MDView/
 MDView.xcodeproj/
+.claude/settings.local.json
+.claude/

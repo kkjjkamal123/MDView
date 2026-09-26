@@ -41,6 +41,7 @@ Grab the installer for your platform from the
 
 | Platform | File | Notes |
 |---|---|---|
+| macOS 27 or later (Apple silicon) | `MDView-1.2.0.dmg` | Open the disk image and drag MDView to Applications |
 | Windows 10/11 (64-bit) | `MDView-Setup-1.1.0-x64.exe` | Recommended for most PCs |
 | Windows on ARM | `MDView-Setup-1.1.0-arm64.exe` | Surface Pro X, Snapdragon laptops |
 | Windows (either) | `MDView-Setup-1.1.0.exe` | Universal installer, both architectures |
@@ -49,9 +50,47 @@ Grab the installer for your platform from the
 
 > **Windows SmartScreen** may warn on first run because the installer is not
 > code-signed with a paid certificate. Choose *More info → Run anyway*.
+>
+> **macOS** may say MDView "can't be opened" the first time, because the app is
+> not yet notarized by Apple. Open *System Settings → Privacy & Security*,
+> scroll down and choose *Open Anyway*. You only need to do this once.
 
 After installing, `.md`, `.markdown`, `.mdx`, `.qmd` and `.rmd` files can be
 opened by double-clicking them.
+
+---
+
+## MDView for Mac
+
+Version 1.2.0 is a native macOS app, written from the ground up in SwiftUI.
+It looks and behaves like the apps that ship with your Mac.
+
+- **Native window** — standard title bar and toolbar, the document's icon in
+  the title bar, and the familiar dot in the close button when there are
+  unsaved changes
+- **Sidebar** with an outline that follows you as you scroll, a folder
+  browser with recent documents, and search across every file in a folder
+- **Three layouts** — preview, editor, or both side by side
+- **Six themes** — System, Light, Dark, Sepia, Nord and High Contrast — plus
+  three typefaces and four page widths, in a standard Settings window
+- **Find in document**, **Export as PDF**, **Print** and **Share**
+- **Local images** next to your document are shown; MDView asks once for
+  permission to read the folder and remembers it
+- **Drag and drop** a Markdown file anywhere in the window to open it
+- Asks before closing a document or quitting with unsaved changes
+- Fully sandboxed, and makes no network requests at all
+
+| Action | Shortcut |
+|---|---|
+| New document / new window | <kbd>⌘</kbd><kbd>N</kbd> / <kbd>⇧</kbd><kbd>⌘</kbd><kbd>N</kbd> |
+| Open file / folder | <kbd>⌘</kbd><kbd>O</kbd> / <kbd>⇧</kbd><kbd>⌘</kbd><kbd>O</kbd> |
+| Save / Save As | <kbd>⌘</kbd><kbd>S</kbd> / <kbd>⇧</kbd><kbd>⌘</kbd><kbd>S</kbd> |
+| Preview / Split / Editor | <kbd>⌘</kbd><kbd>1</kbd> / <kbd>⌘</kbd><kbd>2</kbd> / <kbd>⌘</kbd><kbd>3</kbd> |
+| Find, next, previous | <kbd>⌘</kbd><kbd>F</kbd>, <kbd>⌘</kbd><kbd>G</kbd>, <kbd>⇧</kbd><kbd>⌘</kbd><kbd>G</kbd> |
+| Bigger / smaller / actual-size text | <kbd>⌘</kbd><kbd>+</kbd> / <kbd>⌘</kbd><kbd>−</kbd> / <kbd>⌘</kbd><kbd>0</kbd> |
+| Print / export PDF | <kbd>⌘</kbd><kbd>P</kbd> / <kbd>⇧</kbd><kbd>⌘</kbd><kbd>E</kbd> |
+| Show or hide the sidebar | <kbd>⌃</kbd><kbd>⌘</kbd><kbd>S</kbd> |
+| Settings | <kbd>⌘</kbd><kbd>,</kbd> |
 
 ---
 
@@ -180,7 +219,7 @@ of variables is usually all it takes:
 
 ---
 
-## Keyboard shortcuts
+## Keyboard shortcuts (Windows & Linux)
 
 | Action | Shortcut |
 |---|---|
@@ -231,6 +270,8 @@ only network request it ever makes is an update check against this
 repository's releases page, which you can switch off in Preferences. Nothing
 about the files you open is ever transmitted — they are read from disk and
 rendered inside a sandboxed, script-free page.
+
+The Mac version goes further: it makes no network requests of any kind.
 
 ---
 
