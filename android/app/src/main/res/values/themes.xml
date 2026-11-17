@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- DayNight, so the WebView reports prefers-color-scheme: dark when the system is dark. -->
+    <style name="Theme.MDView" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:isLightTheme">true</item>
+    </style>
+</resources>

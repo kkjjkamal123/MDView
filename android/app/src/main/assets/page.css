@@ -1,0 +1,257 @@
+
+:root {
+    color-scheme: light dark;
+    --fg: #1d1d1f;
+    --fg-secondary: #6e6e73;
+    --rule: rgba(0,0,0,0.1);
+    --pre-bg: rgba(0,0,0,0.04);
+    --code-bg: rgba(0,0,0,0.055);
+    --accent: #0068da;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --fg: #ececf0;
+        --fg-secondary: #98989d;
+        --rule: rgba(255,255,255,0.12);
+        --pre-bg: rgba(255,255,255,0.05);
+        --code-bg: rgba(255,255,255,0.09);
+        --accent: #4aa3ff;
+    }
+}
+
+/* The window paints the page colour (ReaderTheme.pageBackground), so the page itself stays transparent. */
+html, body { background: transparent; }
+body {
+    font: 16px/1.62 -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    font-feature-settings: "kern", "liga";
+    color: var(--fg);
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 40px 56px 120px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-wrap: break-word;
+}
+
+/* Reader themes only swap the palette. */
+body.light { --fg: #1d1d1f; --fg-secondary: #6e6e73; --rule: rgba(0,0,0,0.1); --pre-bg: #f5f5f7; --code-bg: rgba(0,0,0,0.055); --accent: #0068da; color-scheme: light; }
+body.dark { --fg: #ececf0; --fg-secondary: #98989d; --rule: rgba(255,255,255,0.12); --pre-bg: #2a2a2d; --code-bg: rgba(255,255,255,0.09); --accent: #4aa3ff; color-scheme: dark; }
+body.sepia { --fg: #433a2c; --fg-secondary: #7a6d59; --rule: rgba(90,70,40,0.18); --pre-bg: #efe6d4; --code-bg: rgba(90,70,40,0.09); --accent: #9a5b1e; color-scheme: light; }
+body.nord { --fg: #d8dee9; --fg-secondary: #a3adbd; --rule: #434c5e; --pre-bg: #3b4252; --code-bg: #434c5e; --accent: #88c0d0; color-scheme: dark; }
+body.highContrast { --fg: #ffffff; --fg-secondary: #e0e0e0; --rule: #ffffff; --pre-bg: #141414; --code-bg: #262626; --accent: #ffd60a; color-scheme: dark; }
+
+#content > :first-child { margin-top: 0; }
+/* Off-screen blocks skip style, layout and paint, so a long document costs no more than a screenful. */
+#content > * { content-visibility: auto; contain-intrinsic-size: auto 2em; }
+body.printing #content > * { content-visibility: visible; }
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 1.7em 0 0.55em;
+    scroll-margin-top: 16px;
+    break-after: avoid;
+}
+h1 { font-size: 2em; letter-spacing: -0.022em; }
+h2 { font-size: 1.5em; letter-spacing: -0.017em; padding-bottom: 0.3em; border-bottom: 1px solid var(--rule); }
+h3 { font-size: 1.25em; font-weight: 600; letter-spacing: -0.01em; }
+h4 { font-size: 1.05em; font-weight: 600; }
+h5, h6 { font-size: 0.95em; font-weight: 600; color: var(--fg-secondary); }
+
+p, ul, ol, dl, blockquote, pre, table, details { margin: 0 0 1em; }
+ul, ol { padding-left: 1.6em; }
+li + li, li > ul, li > ol { margin-top: 0.25em; }
+li > ul, li > ol { margin-bottom: 0; }
+li:has(> input[type="checkbox"]) { list-style: none; margin-left: -1.35em; }
+input[type="checkbox"] {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    margin: 0 0.5em 0 0;
+    vertical-align: -0.12em;
+    border: 1.5px solid var(--fg-secondary);
+    border-radius: 4px;
+    opacity: 0.8;
+}
+input[type="checkbox"]:checked {
+    opacity: 1;
+    border-color: var(--accent);
+    background: var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3.5 7.2l2.3 2.3 4.7-5' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { font-weight: 650; }
+hr { border: none; height: 1px; background: var(--rule); margin: 2.2em 0; }
+img { max-width: 100%; height: auto; border-radius: 6px; }
+video { max-width: 100%; height: auto; border-radius: 6px; }
+audio { width: 100%; max-width: 480px; }
+mark { background: rgba(255, 214, 10, 0.45); color: inherit; border-radius: 2px; }
+
+blockquote {
+    padding: 0.1em 1em;
+    border-left: 3px solid var(--rule);
+    color: var(--fg-secondary);
+}
+blockquote > :last-child { margin-bottom: 0; }
+
+code, kbd, samp {
+    font-family: "SF Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.86em;
+}
+:not(pre) > code {
+    background: var(--code-bg);
+    padding: 0.15em 0.38em;
+    border-radius: 5px;
+}
+kbd {
+    padding: 0.1em 0.4em;
+    border: 1px solid var(--rule);
+    border-bottom-width: 2px;
+    border-radius: 5px;
+}
+pre {
+    position: relative;
+    background: var(--pre-bg);
+    padding: 14px 18px;
+    border-radius: 10px;
+    overflow-x: auto;
+    line-height: 1.5;
+}
+pre code, pre code.hljs, code.hljs { background: transparent !important; padding: 0; color: inherit; }
+
+table { border-collapse: collapse; width: 100%; font-size: 0.94em; font-variant-numeric: tabular-nums; }
+th, td { padding: 7px 12px; text-align: left; border-bottom: 1px solid var(--rule); }
+th { font-weight: 600; border-bottom-width: 2px; }
+tbody tr:nth-child(even) td { background: var(--pre-bg); }
+
+.mermaid { display: flex; justify-content: center; margin: 1.5em 0; }
+.katex-display { margin: 1.4em 0; overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+pre, table, .mermaid, .katex-display, img { break-inside: avoid; }
+
+/* Copy button appears when hovering a code block, like in Xcode's documentation viewer. */
+.copy-code {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    border: none;
+    border-radius: 6px;
+    padding: 3px 9px;
+    background: var(--code-bg);
+    color: var(--fg-secondary);
+    font: 500 11px -apple-system, sans-serif;
+    cursor: default;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+pre:hover .copy-code, .copy-code:focus-visible { opacity: 1; }
+.copy-code:hover { color: var(--fg); }
+
+/* Dark syntax colours for dark reader themes and the System theme in Dark Mode. */
+@media (prefers-color-scheme: dark) {
+    body:not(.light):not(.sepia) .hljs-keyword, body:not(.light):not(.sepia) .hljs-doctag, body:not(.light):not(.sepia) .hljs-type { color: #ff7b72; }
+    body:not(.light):not(.sepia) .hljs-title, body:not(.light):not(.sepia) .hljs-title.function_ { color: #d2a8ff; }
+    body:not(.light):not(.sepia) .hljs-string { color: #a5d6ff; }
+    body:not(.light):not(.sepia) .hljs-number, body:not(.light):not(.sepia) .hljs-literal { color: #79c0ff; }
+    body:not(.light):not(.sepia) .hljs-comment { color: #8b949e; }
+    body:not(.light):not(.sepia) .hljs-attr, body:not(.light):not(.sepia) .hljs-variable, body:not(.light):not(.sepia) .hljs-built_in, body:not(.light):not(.sepia) .hljs-symbol { color: #ffa657; }
+    body:not(.light):not(.sepia) .hljs-subst, body:not(.light):not(.sepia) .hljs-emphasis, body:not(.light):not(.sepia) .hljs-strong { color: inherit; }
+    body:not(.light):not(.sepia) .hljs-name, body:not(.light):not(.sepia) .hljs-quote, body:not(.light):not(.sepia) .hljs-selector-tag { color: #7ee787; }
+    body:not(.light):not(.sepia) .hljs-section { color: #79c0ff; }
+    body:not(.light):not(.sepia) .hljs-bullet { color: #f2cc60; }
+    body:not(.light):not(.sepia) .hljs-meta, body:not(.light):not(.sepia) .hljs-regexp { color: #a5d6ff; }
+    body:not(.light):not(.sepia) .hljs-addition { color: #aff5b4; background: rgba(46,160,67,0.15); }
+    body:not(.light):not(.sepia) .hljs-deletion { color: #ffdcd7; background: rgba(248,81,73,0.15); }
+}
+:is(body.dark, body.nord, body.highContrast) .hljs-keyword,
+:is(body.dark, body.nord, body.highContrast) .hljs-doctag,
+:is(body.dark, body.nord, body.highContrast) .hljs-type { color: #ff7b72; }
+:is(body.dark, body.nord, body.highContrast) .hljs-title,
+:is(body.dark, body.nord, body.highContrast) .hljs-title.function_ { color: #d2a8ff; }
+:is(body.dark, body.nord, body.highContrast) .hljs-string { color: #a5d6ff; }
+:is(body.dark, body.nord, body.highContrast) .hljs-number,
+:is(body.dark, body.nord, body.highContrast) .hljs-literal { color: #79c0ff; }
+:is(body.dark, body.nord, body.highContrast) .hljs-comment { color: #8b949e; }
+:is(body.dark, body.nord, body.highContrast) .hljs-attr,
+:is(body.dark, body.nord, body.highContrast) .hljs-variable,
+:is(body.dark, body.nord, body.highContrast) .hljs-built_in,
+:is(body.dark, body.nord, body.highContrast) .hljs-symbol { color: #ffa657; }
+:is(body.dark, body.nord, body.highContrast) .hljs-subst,
+:is(body.dark, body.nord, body.highContrast) .hljs-emphasis,
+:is(body.dark, body.nord, body.highContrast) .hljs-strong { color: inherit; }
+:is(body.dark, body.nord, body.highContrast) .hljs-name,
+:is(body.dark, body.nord, body.highContrast) .hljs-quote,
+:is(body.dark, body.nord, body.highContrast) .hljs-selector-tag { color: #7ee787; }
+:is(body.dark, body.nord, body.highContrast) .hljs-section { color: #79c0ff; }
+:is(body.dark, body.nord, body.highContrast) .hljs-bullet { color: #f2cc60; }
+:is(body.dark, body.nord, body.highContrast) .hljs-meta,
+:is(body.dark, body.nord, body.highContrast) .hljs-regexp { color: #a5d6ff; }
+:is(body.dark, body.nord, body.highContrast) .hljs-addition { color: #aff5b4; background: rgba(46,160,67,0.15); }
+:is(body.dark, body.nord, body.highContrast) .hljs-deletion { color: #ffdcd7; background: rgba(248,81,73,0.15); }
+
+/* Callouts: > [!NOTE] and :::note */
+.callout { --callout: #0969da; border-left: 3px solid var(--callout); padding: 0.55em 1em; margin: 0 0 1em; border-radius: 0 8px 8px 0; background: color-mix(in srgb, var(--callout) 7%, transparent); }
+.callout > :last-child { margin-bottom: 0; }
+.callout-title { font-weight: 650; color: var(--callout); margin-bottom: 0.35em; }
+.callout-tip { --callout: #1a7f37; }
+.callout-important { --callout: #8250df; }
+.callout-warning { --callout: #9a6700; }
+.callout-caution { --callout: #cf222e; }
+:is(body.dark, body.nord, body.highContrast) .callout-note { --callout: #4493f8; }
+:is(body.dark, body.nord, body.highContrast) .callout-tip { --callout: #3fb950; }
+:is(body.dark, body.nord, body.highContrast) .callout-important { --callout: #ab7df8; }
+:is(body.dark, body.nord, body.highContrast) .callout-warning { --callout: #d29922; }
+:is(body.dark, body.nord, body.highContrast) .callout-caution { --callout: #f85149; }
+@media (prefers-color-scheme: dark) {
+    body:not(.light):not(.sepia) .callout-note { --callout: #4493f8; }
+    body:not(.light):not(.sepia) .callout-tip { --callout: #3fb950; }
+    body:not(.light):not(.sepia) .callout-important { --callout: #ab7df8; }
+    body:not(.light):not(.sepia) .callout-warning { --callout: #d29922; }
+    body:not(.light):not(.sepia) .callout-caution { --callout: #f85149; }
+}
+
+/* Front matter card */
+.front-matter { border: 1px solid var(--rule); border-radius: 10px; padding: 0.5em 1em; margin: 0 0 1.6em; font-size: 0.9em; }
+.front-matter summary { color: var(--fg-secondary); font-weight: 600; cursor: default; }
+.front-matter table { margin: 0.5em 0 0.2em; }
+.front-matter th { width: 28%; color: var(--fg-secondary); font-weight: 500; border-bottom-width: 1px; }
+.front-matter tbody tr:nth-child(even) td { background: none; }
+.front-matter .tag { display: inline-block; padding: 0 0.5em; border-radius: 6px; background: var(--code-bg); }
+
+/* Footnotes */
+.footnote-ref a { text-decoration: none; }
+.footnote-ref { font-size: 0.75em; line-height: 0; }
+.footnotes { margin-top: 2.5em; padding-top: 1em; border-top: 1px solid var(--rule); font-size: 0.9em; color: var(--fg-secondary); }
+.footnotes li > p { display: inline; }
+.footnote-back { margin-left: 0.35em; }
+ins { text-decoration-color: var(--accent); }
+
+/* Printing & PDF export */
+body.printing { padding: 0; max-width: none !important; }
+body.printing .copy-code { display: none; }
+
+/* ---- Android ---- */
+body { font-family: system-ui, Roboto, "Noto Sans", sans-serif; }
+code, kbd, samp { font-family: "Roboto Mono", "Droid Sans Mono", ui-monospace, monospace; }
+.copy-code { font-family: system-ui, Roboto, sans-serif; }
+/* Phones: the Mac's generous margins would leave too little room for text. */
+@media (max-width: 720px) {
+    body { padding: 18px 18px 96px; }
+    h1 { font-size: 1.75em; }
+    h2 { font-size: 1.38em; }
+    pre { padding: 12px 14px; border-radius: 8px; margin-left: -4px; margin-right: -4px; }
+    th, td { padding: 6px 9px; }
+}
+/* Wide tables scroll sideways inside their wrapper instead of widening the page. */
+.table-scroll { overflow-x: auto; margin: 0 0 1em; -webkit-overflow-scrolling: touch; }
+.table-scroll > table { margin: 0; }
+/* Touch screens have no hover: keep the copy button visible, just quieter. */
+@media (hover: none) {
+    .copy-code { opacity: 0.85; padding: 4px 10px; font-size: 12px; top: 6px; right: 6px; }
+    pre:has(> .copy-code) { padding-top: 36px; }
+}
+/* No tap flash on links and buttons. */
+* { -webkit-tap-highlight-color: transparent; }
+body.printing { padding: 0 !important; }
+/* Equation numbers are CSS counters; content-visibility scopes counters to each block, which would
+   number every block's equations from (1). Blocks with numbered equations always lay out. */
+#content > *:has(.eqn-num) { content-visibility: visible; }

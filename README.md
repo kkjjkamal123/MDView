@@ -41,7 +41,7 @@ Grab the installer for your platform from the
 
 | Platform | File | Notes |
 |---|---|---|
-| macOS 27 or later (Apple silicon) | `MDView-1.2.0.dmg` | Open the disk image and drag MDView to Applications |
+| macOS 27 or later (Apple silicon) | `MDView-1.3.0.dmg` | Open the disk image and drag MDView to Applications |
 | Windows 10/11 (64-bit) | `MDView-Setup-1.1.0-x64.exe` | Recommended for most PCs |
 | Windows on ARM | `MDView-Setup-1.1.0-arm64.exe` | Surface Pro X, Snapdragon laptops |
 | Windows (either) | `MDView-Setup-1.1.0.exe` | Universal installer, both architectures |
@@ -62,35 +62,68 @@ opened by double-clicking them.
 
 ## MDView for Mac
 
-Version 1.2.0 is a native macOS app, written from the ground up in SwiftUI.
-It looks and behaves like the apps that ship with your Mac.
+Version 1.3.0 is a native macOS app, written from the ground up in SwiftUI.
+It looks and behaves like the apps that ship with your Mac, and it is built to
+sit open all day: at idle it uses no CPU at all.
 
 - **Native window** — standard title bar and toolbar, the document's icon in
   the title bar, and the familiar dot in the close button when there are
   unsaved changes
 - **Sidebar** with an outline that follows you as you scroll, a folder
-  browser with recent documents, and search across every file in a folder
-- **Three layouts** — preview, editor, or both side by side
+  browser with recent documents (shared by every window), and search across
+  every file in a folder
+- **Three layouts** — preview, editor, or both side by side, with the preview
+  following the editor as you scroll
+- **Command palette** (<kbd>⇧</kbd><kbd>⌘</kbd><kbd>P</kbd>) — type a few
+  letters of any command, heading, recent document or file in the open folder
+- **Back and forward** between linked documents, like a browser; a link such
+  as `notes.md#setup` opens the file at that heading
+- **Find in document** with *Match Case*, *Whole Words* and *Regular
+  Expression* options and a "3 of 12" match count; matches are highlighted
+  without touching the document. In the Editor layout ⌘F searches the source
+- **Live reload** — when another app saves the file, MDView updates at once;
+  if you have unsaved edits it asks whether to reload or keep them
+- **Reading position** — each document reopens at the section you were reading
 - **Six themes** — System, Light, Dark, Sepia, Nord and High Contrast — plus
   three typefaces and four page widths, in a standard Settings window
-- **Find in document**, **Export as PDF**, **Print** and **Share**
-- **Local images** next to your document are shown; MDView asks once for
-  permission to read the folder and remembers it
+- **Export as PDF** (paginated), **Export as HTML** (a single self-contained
+  file with images, diagrams and maths embedded), **Print** and **Share**
+- **Local images, video and audio** next to your document are shown; MDView
+  asks once for permission to read the folder and remembers it. Media never
+  plays or downloads until you press play
 - **Drag and drop** a Markdown file anywhere in the window to open it
-- Asks before closing a document or quitting with unsaved changes
-- Fully sandboxed, and makes no network requests at all
+- Asks before closing a window, closing a document or quitting with unsaved
+  changes
+- **Safe with untrusted files** — raw HTML is sanitised and the page runs
+  under a strict Content Security Policy, so a document can never run script;
+  links to applications or scripts are revealed in Finder instead of launched
+- Fully sandboxed
 
 | Action | Shortcut |
 |---|---|
 | New document / new window | <kbd>⌘</kbd><kbd>N</kbd> / <kbd>⇧</kbd><kbd>⌘</kbd><kbd>N</kbd> |
 | Open file / folder | <kbd>⌘</kbd><kbd>O</kbd> / <kbd>⇧</kbd><kbd>⌘</kbd><kbd>O</kbd> |
 | Save / Save As | <kbd>⌘</kbd><kbd>S</kbd> / <kbd>⇧</kbd><kbd>⌘</kbd><kbd>S</kbd> |
+| Close window / close document | <kbd>⌘</kbd><kbd>W</kbd> / <kbd>⌥</kbd><kbd>⌘</kbd><kbd>W</kbd> |
 | Preview / Split / Editor | <kbd>⌘</kbd><kbd>1</kbd> / <kbd>⌘</kbd><kbd>2</kbd> / <kbd>⌘</kbd><kbd>3</kbd> |
+| Command palette | <kbd>⇧</kbd><kbd>⌘</kbd><kbd>P</kbd> |
+| Back / forward | <kbd>⌘</kbd><kbd>[</kbd> / <kbd>⌘</kbd><kbd>]</kbd> |
+| Next / previous section | <kbd>⌥</kbd><kbd>⌘</kbd><kbd>↓</kbd> / <kbd>⌥</kbd><kbd>⌘</kbd><kbd>↑</kbd> |
 | Find, next, previous | <kbd>⌘</kbd><kbd>F</kbd>, <kbd>⌘</kbd><kbd>G</kbd>, <kbd>⇧</kbd><kbd>⌘</kbd><kbd>G</kbd> |
 | Bigger / smaller / actual-size text | <kbd>⌘</kbd><kbd>+</kbd> / <kbd>⌘</kbd><kbd>−</kbd> / <kbd>⌘</kbd><kbd>0</kbd> |
-| Print / export PDF | <kbd>⌘</kbd><kbd>P</kbd> / <kbd>⇧</kbd><kbd>⌘</kbd><kbd>E</kbd> |
+| Print / export PDF / export HTML | <kbd>⌘</kbd><kbd>P</kbd> / <kbd>⇧</kbd><kbd>⌘</kbd><kbd>E</kbd> / <kbd>⌥</kbd><kbd>⇧</kbd><kbd>⌘</kbd><kbd>E</kbd> |
 | Show or hide the sidebar | <kbd>⌃</kbd><kbd>⌘</kbd><kbd>S</kbd> |
 | Settings | <kbd>⌘</kbd><kbd>,</kbd> |
+
+**Built for battery life.** Editing re-renders only the blocks you changed
+(a keystroke in a 1000-equation document costs a few milliseconds instead of
+a full re-layout), each formula is typeset once and cached, the 3 MB diagram
+engine loads only for documents that contain a diagram and draws diagrams as
+you scroll to them, off-screen blocks skip layout and paint, and file watching
+uses kernel events rather than polling. With a document open and nothing
+happening, MDView and its web content use no measurable CPU.
+
+See [CHANGELOG.md](CHANGELOG.md) for what changed in each release.
 
 ---
 
@@ -271,7 +304,9 @@ repository's releases page, which you can switch off in Preferences. Nothing
 about the files you open is ever transmitted — they are read from disk and
 rendered inside a sandboxed, script-free page.
 
-The Mac version goes further: it makes no network requests of any kind.
+The Mac version goes further: the app itself makes no network requests of
+any kind. The only things ever fetched are remote images that a document
+you open links to, exactly as a web browser would show them.
 
 ---
 
